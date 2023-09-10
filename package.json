@@ -11,5 +11,8 @@
     "url": "https://github.com/kvora2/fragments.git"
   },
   "author": "Kelvin Vora",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "prettier": "3.0.3"
+  }
 }
