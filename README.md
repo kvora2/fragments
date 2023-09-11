@@ -60,7 +60,7 @@ npm install --save express cors helmet compression
 npm install --save-dev nodemon
 ```
 
-## Structure
+## Structure 🗺️
 
 ```plaintext
 .
