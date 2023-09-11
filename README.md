@@ -2,7 +2,7 @@
 
 ## Description
 
-Welcome!! we will be exploring and starting our journey with Cloud computing by implementing some of the common but useful libraries and dependencies in Project that we'll be working. So Let's get started 🦾🤖
+Welcome!! we will be exploring and starting our journey with Cloud computing by implementing some of the common but useful libraries and dependencies in Project that we'll be using and working on moving forward. So Let's get started 🦾🤖
 
 ## Getting Started
 
