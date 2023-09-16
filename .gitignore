@@ -128,3 +128,5 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+#.env file contains confidential data and shouldn't go to github
+.env
