@@ -11,7 +11,7 @@ const router = express.Router();
 // Our authentication middleware
 const { authenticate } = require('../auth');
 
-//using funtions for HTTP responses
+//using functions for HTTP responses
 const { createSuccessResponse } = require('../../src/response');
 
 /**
