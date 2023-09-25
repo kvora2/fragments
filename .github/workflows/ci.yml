@@ -37,7 +37,7 @@ jobs:
         # There are two ways we could do this:
         #
         # 1. Call `npm ci` followed by `npm test` like so (NOTE: the use of | and -):
-        # run:  |
+        # run:|
         # - npm install
         # - npm test
         #
