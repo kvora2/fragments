@@ -1,9 +1,10 @@
 // tests/unit/get.test.js
+// const logger = require('../../src/logger');
 
 const request = require('supertest');
+const hash = require('../../src/hash');
 
 const app = require('../../src/app');
-// const logger = require('../../src/logger');
 describe('POST /v1/fragments', () => {
   // If the request is missing the Authorization header, it should be forbidden
   test('unauthenticated requests are denied', () => request(app).post('/v1/fragments').expect(401));
@@ -21,8 +22,31 @@ describe('POST /v1/fragments', () => {
       .set('Content-Type', 'text/plain');
     expect(res.statusCode).toBe(201);
     expect(res.body.status).toBe('ok');
-    expect(Array.isArray(res.body.fragments)).toBe(true);
-    expect(res.body.fragments[0].ownerId).toEqual('user1@email.com');
+    expect(res.body.fragments.ownerId).toEqual(hash('user1@email.com'));
+    expect(res.body.fragments.type).toEqual('text/plain');
+    expect(res.body.fragments.created).toBeDefined();
+    expect(res.body.fragments.updated).toBeDefined();
+    expect(res.body.fragments.size).toEqual(Buffer.byteLength('Some data String'));
+  });
+
+  //checking response to have location URL of fragment as well
+  test('expecting location URL in response header', async () => {
+    const res = await request(app)
+      .post('/v1/fragments')
+      .auth('user1@email.com', 'password1')
+      .send('Some data String')
+      .set('Content-Type', 'text/plain');
+    expect(res.statusCode).toBe(201);
+    expect(res.headers).toHaveProperty('location');
+  });
+
+  // Sending unsupported content type
+  test('providing unsupported content-type and expecting error 415', async () => {
+    const res = await request(app)
+      .post('/v1/fragments')
+      .auth('user1@email.com', 'password1')
+      .send({ data: 'Some json data' });
+    expect(res.statusCode).toBe(400);
   });
 
   // TODO: we'll need to add tests to check the contents of the fragments array later

@@ -10,28 +10,30 @@ module.exports = async (req, res) => {
   try {
     // Check if the request body is a Buffer
     if (Buffer.isBuffer(req.body)) {
+      // getting current host from requesting url
+      process.env.API_URL = 'https://' + req.headers.host;
+
       // Parse the Content-Type header of the request
       const { type } = contentType.parse(req);
+      // creating the instance for req.body we got
+      const fragment = new Fragment({
+        ownerId: req.user,
+        type: type,
+        size: req.body.byteLength,
+      });
 
-      // Check if the parsed content type is supported
-      if (Fragment.isSupportedType(type)) {
-        // creating the instance for req.body we got
-        const fragment = new Fragment({
-          ownerId: req.user,
-          type: type,
-        });
-
-        if (req.body.data) {
-          fragment.setData(Buffer.from(req.body.data));
-        }
-        // Save/update the fragment instance
-        await fragment.save();
-        // Send a success response
-        res.status(201).json(createSuccessResponse({ fragments: [fragment] }));
-      } else {
-        // Content-Type not supported
-        res.status(415).json(createErrorResponse(415, 'Unsupported content-type'));
+      if (req.body.data) {
+        fragment.setData(Buffer.from(req.body));
       }
+      // Save/update the fragment instance
+      await fragment.save();
+
+      //adding location url of added fragment in header and setting content-type as well
+      res.setHeader('location', `${process.env.API_URL}/v1/fragments/${fragment.id}`);
+      // res.setHeader('content-type', 'text/plain');
+
+      // Send a success response
+      res.status(201).json(createSuccessResponse({ fragments: fragment }));
     } else {
       // Request body is not a Buffer
       res.status(400).json(createErrorResponse(400, 'Invalid request Body'));
