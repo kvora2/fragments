@@ -19,6 +19,7 @@ const { createSuccessResponse } = require('../../src/response');
  * Protect them all so you have to be authenticated in order to access.
  */
 router.use(`/v1`, authenticate(), require('./api'));
+
 /**
  * Define a simple health check route. If the server is running
  * we'll respond with a 200 OK.  If not, the server isn't healthy.
