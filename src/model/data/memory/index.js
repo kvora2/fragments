@@ -1,5 +1,4 @@
 // const logger = require('../../../logger');
-const logger = require('../../../logger');
 const MemoryDB = require('./memory-db');
 
 // const logger = require('../../../logger');
