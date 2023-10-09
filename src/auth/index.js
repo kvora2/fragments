@@ -1,5 +1,7 @@
 // src/auth/index.js
 
+// const logger = require('../logger');
+
 // Prefer Amazon Cognito
 if (process.env.AWS_COGNITO_POOL_ID && process.env.AWS_COGNITO_CLIENT_ID) {
   module.exports = require('./cognito');

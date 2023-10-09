@@ -1,7 +1,7 @@
 // tests/unit/get.test.js
 
 const request = require('supertest');
-
+// const logger = require('../../src/logger');
 const app = require('../../src/app');
 
 describe('GET /v1/fragments', () => {
@@ -21,4 +21,15 @@ describe('GET /v1/fragments', () => {
   });
 
   // TODO: we'll need to add tests to check the contents of the fragments array later
+  test('checking contents of user fragments array', async () => {
+    await request(app)
+      .post('/v1/fragments')
+      .auth('user1@email.com', 'password1')
+      .send('Some data String')
+      .set('Content-Type', 'text/plain');
+    const res2 = await request(app).get('/v1/fragments').auth('user1@email.com', 'password1');
+    expect(res2.statusCode).toBe(200);
+    expect(res2.body.status).toBe('ok');
+    expect(Array.isArray(res2.body.fragments)).toBe(true);
+  });
 });
