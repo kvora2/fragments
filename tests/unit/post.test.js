@@ -22,6 +22,7 @@ describe('POST /v1/fragments', () => {
     expect(res.statusCode).toBe(201);
     expect(res.body.status).toBe('ok');
     expect(Array.isArray(res.body.fragments)).toBe(true);
+    expect(res.body.fragments[0].ownerId).toEqual('user1@email.com');
   });
 
   // TODO: we'll need to add tests to check the contents of the fragments array later
