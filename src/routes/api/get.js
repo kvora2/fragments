@@ -3,18 +3,18 @@
 const { createSuccessResponse } = require('../../response');
 const { Fragment } = require('../../model/fragment');
 
-/**
- * Get a list of fragments for the current user
- */
+// Getting a list of fragments for the current user
 module.exports = async (req, res) => {
   const authHeader = req.headers.authorization;
+
+  // decoding hashed userID
   const encodedCredentials = authHeader.split(' ')[1];
   const decodedCredentials = Buffer.from(encodedCredentials, 'base64').toString('utf-8');
   const email = decodedCredentials.split(':')[0];
-  const id = req.query.id;
+  const id = req.params.id;
 
   if (id) {
-    // logger.debug(`getting1 - ${req.query.id} and ${JSON.stringify(id)}`);
+    // logger.debug(`getting1 - ${req.params.id} and ${email}}`);
     const fragmentID = await Fragment.byId(email, id);
     const fragData = await fragmentID.getData();
     const data = Buffer.from(fragData).toString('utf-8');

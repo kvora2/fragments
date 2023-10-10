@@ -65,7 +65,7 @@ describe('GET /v1/fragments', () => {
     await frag.setData(data);
 
     const res = await request(app)
-      .get(`/v1/fragments?id=${frag.id}`)
+      .get(`/v1/fragments/${frag.id}`)
       .auth('user2@email.com', 'password2');
 
     expect(res.statusCode).toBe(200);

@@ -29,7 +29,6 @@ module.exports = async (req, res) => {
       await fragment.save();
 
       //adding location url of added fragment in header and setting content-type as well
-      // res.setHeader('location', `${process.env.API_URL}/v1/fragments/${fragment.id}`);
       res.location(`${process.env.API_URL}/v1/fragments/${fragment.id}`);
 
       // Send a success response
