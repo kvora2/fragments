@@ -41,7 +41,7 @@ describe('POST /v1/fragments', () => {
   });
 
   // Sending unsupported content type
-  test('providing unsupported content-type and expecting error 415', async () => {
+  test('providing unsupported content-type and expecting error 400', async () => {
     const res = await request(app)
       .post('/v1/fragments')
       .auth('user1@email.com', 'password1')

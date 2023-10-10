@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
     // Check if the request body is a Buffer
     if (Buffer.isBuffer(req.body)) {
       // getting current host from requesting url
-      process.env.API_URL = 'https://' + req.headers.host;
+      process.env.API_URL = 'http://' + req.headers.host;
 
       // Parse the Content-Type header of the request
       const { type } = contentType.parse(req);
@@ -29,8 +29,8 @@ module.exports = async (req, res) => {
       await fragment.save();
 
       //adding location url of added fragment in header and setting content-type as well
-      res.setHeader('location', `${process.env.API_URL}/v1/fragments/${fragment.id}`);
-      // res.setHeader('content-type', 'text/plain');
+      // res.setHeader('location', `${process.env.API_URL}/v1/fragments/${fragment.id}`);
+      res.location(`${process.env.API_URL}/v1/fragments/${fragment.id}`);
 
       // Send a success response
       res.status(201).json(createSuccessResponse({ fragments: fragment }));
