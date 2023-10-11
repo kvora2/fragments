@@ -106,7 +106,7 @@ class Fragment {
    * Gets the fragment's data from the database
    * @returns Promise<Buffer>
    */
-  getData() {
+  async getData() {
     return readFragmentData(this.ownerId, this.id);
   }
 
@@ -120,6 +120,7 @@ class Fragment {
       if (data) {
         this.updated = new Date();
         this.size = Buffer.byteLength(data);
+        logger.debug(`setting - ${data}`);
         return writeFragmentData(this.ownerId, this.id, data);
       } else {
         throw new Error(`No data provided`);

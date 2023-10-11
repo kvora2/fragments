@@ -37,6 +37,7 @@ describe('GET /v1/fragments', () => {
     expect(Array.isArray(res.body.fragments)).toBe(true);
   });
 
+  // passing a query in domain for expanding the fragment that we will get as response
   test('expecting to get ownerId from array since we are expanding', async () => {
     await request(app)
       .post('/v1/fragments')
@@ -55,6 +56,7 @@ describe('GET /v1/fragments', () => {
     // logger.debug(`testing - ${JSON.stringify(res.body.fragments)}`);
   });
 
+  // providing an params id in domain and expecting that fragment to be returned
   test('expecting a specific fragment based on ID provided via params', async () => {
     const frag = new Fragment({
       ownerId: 'user2@email.com',
@@ -71,5 +73,12 @@ describe('GET /v1/fragments', () => {
     expect(res.statusCode).toBe(200);
     expect(res.body.status).toBe('ok');
     expect(res.body.data).toEqual('Some Data');
+  });
+
+  //expecting an error throw since we are defining env vars null
+  test('expecting to throw since there are no env var for execution', async () => {
+    process.env = {};
+
+    expect(require('../../src/auth/index')).toThrow;
   });
 });

@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
         size: req.body.byteLength,
       });
 
-      if (req.body.data) {
+      if (req.body) {
         fragment.setData(Buffer.from(req.body));
       }
       // Save/update the fragment instance

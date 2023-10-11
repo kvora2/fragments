@@ -48,6 +48,4 @@ describe('POST /v1/fragments', () => {
       .send({ data: 'Some json data' });
     expect(res.statusCode).toBe(400);
   });
-
-  // TODO: we'll need to add tests to check the contents of the fragments array later
 });
