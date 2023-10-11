@@ -120,7 +120,6 @@ class Fragment {
       if (data) {
         this.updated = new Date();
         this.size = Buffer.byteLength(data);
-        logger.debug(`setting - ${data}`);
         return writeFragmentData(this.ownerId, this.id, data);
       } else {
         throw new Error(`No data provided`);

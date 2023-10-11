@@ -1,7 +1,5 @@
 // const logger = require('../../../logger');
 
-const logger = require('../../../logger');
-
 const validateKey = (key) => typeof key === 'string';
 
 class MemoryDB {
@@ -24,7 +22,6 @@ class MemoryDB {
     }
     const db = this.db;
     const value = db[primaryKey] && db[primaryKey][secondaryKey];
-    logger.debug(`getting db - ${JSON.stringify(value)}`);
     return Promise.resolve(value);
   }
 
