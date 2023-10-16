@@ -1,0 +1,13 @@
+.github/
+.vscode/
+coverage/
+node_modules/
+tests/
+# unignore only this file in tests dir
+!tests/.htpasswd
+.env
+.eslintrc.js
+.git/
+.gitignore
+.prettier*
+jest*
