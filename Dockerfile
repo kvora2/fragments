@@ -1,6 +1,6 @@
 #Starting our Docker journey from the Fragments microservice
-# setting the base image to be of node and a specific version similar to our system (20.6.1)
-FROM node:20.6.1
+# setting the base image to be of node and a specific version similar to our system (18.18.2)
+FROM node:18.18.2
 
 # Some metadata details about our docker image
 LABEL maintainer="Kelvin Vora <kelvinvora21@gmail.com>"
