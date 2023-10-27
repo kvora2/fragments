@@ -9,14 +9,14 @@ LABEL maintainer="Kelvin Vora <kelvinvora21@gmail.com>" \
       description="Fragments node.js microservice"
 
 # We default to use port 8080 in our service
-ENV PORT=8080
+ENV PORT=8080 \
 # Reduce npm spam when installing within Docker
 # https://docs.npmjs.com/cli/v8/using-npm/config#loglevel
-ENV NPM_CONFIG_LOGLEVEL=warn
+    NPM_CONFIG_LOGLEVEL=warn \
 # Disable colour when run inside Docker
 # https://docs.npmjs.com/cli/v8/using-npm/config#color
-ENV NPM_CONFIG_COLOR=false
-ENV NODE_ENV=production
+    NPM_CONFIG_COLOR=false \
+    NODE_ENV=production
 
 # Use /app as our working directory
 WORKDIR /app
@@ -32,7 +32,9 @@ RUN npm ci --only=production
 #Stage 2: serving the built fragments microservice
 FROM node:18.18.2-alpine3.18@sha256:435dcad253bb5b7f347ebc69c8cc52de7c912eb7241098b920f2fc2d7843183d as deploy
 
+# chagning user from root (by default) to node (less previliged)
 USER node
+
 WORKDIR /app
 
 COPY --from=dependencies /app /app
@@ -43,7 +45,7 @@ COPY ./src ./src
 COPY ./tests/.htpasswd ./tests/.htpasswd
 
 # Start the container by running our server
-CMD node ./src/index.js
+CMD ["node", "./src/index.js"]
 
 # We run our service on port 8080
 EXPOSE 8080
