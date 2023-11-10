@@ -33,10 +33,10 @@ router.post('/fragments', rawBody(), require('./post'));
 // Define our first route, which will be: GET /v1/fragments
 router.get('/fragments', require('./get'));
 
-// Defining route for getting fragment based on ID's
-router.get('/fragments/:id', require('./get'));
-
 // Defining route for getting fragment metadata based on ID's
-// router.get('/fragments/:id', require('./get'));
+router.get('/fragments/:id/info', require('./get'));
+
+// Defining route for getting fragment data only based on ID's
+router.get('/fragments/:id', require('./get'));
 
 module.exports = router;

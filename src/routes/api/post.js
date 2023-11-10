@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
         res.location(`${process.env.API_URL}/v1/fragments/${fragment.id}`);
 
         // Send a success response
-        res.status(201).json(createSuccessResponse({ fragments: fragment }));
+        res.status(201).json(createSuccessResponse({ fragment: fragment }));
       } else {
         // Request body is not a Buffer
         res.status(400).json(createErrorResponse(400, 'Invalid request Body'));

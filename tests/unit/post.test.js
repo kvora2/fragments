@@ -24,11 +24,11 @@ describe('POST /v1/fragments', () => {
       .set('Content-Type', 'text/plain');
     expect(res.statusCode).toBe(201);
     expect(res.body.status).toBe('ok');
-    expect(res.body.fragments.ownerId).toEqual(hash('user1@email.com'));
-    expect(res.body.fragments.type).toEqual('text/plain');
-    expect(res.body.fragments.created).toBeDefined();
-    expect(res.body.fragments.updated).toBeDefined();
-    expect(res.body.fragments.size).toEqual(Buffer.byteLength('Some data String'));
+    expect(res.body.fragment.ownerId).toEqual(hash('user1@email.com'));
+    expect(res.body.fragment.type).toEqual('text/plain');
+    expect(res.body.fragment.created).toBeDefined();
+    expect(res.body.fragment.updated).toBeDefined();
+    expect(res.body.fragment.size).toEqual(Buffer.byteLength('Some data String'));
   });
 
   //checking response to have location URL of fragment as well
@@ -49,7 +49,7 @@ describe('POST /v1/fragments', () => {
       .auth('user1@email.com', 'password1')
       .send({ data: 'Some json data' });
     expect(res.statusCode).toBe(201);
-    expect(res.body.fragments.type).toEqual('application/json');
+    expect(res.body.fragment.type).toEqual('application/json');
   });
 
   // Sending unsupported content type (text/msword)

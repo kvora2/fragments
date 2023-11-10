@@ -37,8 +37,6 @@ app.use(passport.initialize());
 
 app.use('/', require('./routes'));
 
-// const err_data = createErrorResponse(404, 'not found');
-
 app.use((req, res) => {
   res.status(404).json(createErrorResponse(404, 'not found'));
 });

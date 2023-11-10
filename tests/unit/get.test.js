@@ -75,6 +75,26 @@ describe('GET /v1/fragments', () => {
     expect(res.body.data).toEqual('Some Data');
   });
 
+  // providing an params id and info to get info of specific fragment
+  test('expecting a specific fragment metadata based on ID provided via params', async () => {
+    const frag = new Fragment({
+      ownerId: hash('user2@email.com'),
+      type: 'text/plain',
+    });
+    await frag.save();
+    const data = Buffer.from('testing for info param!');
+    await frag.setData(data);
+
+    const res = await request(app)
+      .get(`/v1/fragments/${frag.id}/info`)
+      .auth('user2@email.com', 'password2');
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.status).toBe('ok');
+    expect(res.body.fragment.ownerId).toEqual(hash('user2@email.com'));
+    expect(res.body.fragment.type).toEqual('text/plain');
+  });
+
   //expecting an error throw since we are defining env vars null
   test('expecting to throw since there are no env var for execution', async () => {
     process.env = {};
