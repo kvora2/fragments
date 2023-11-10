@@ -6,12 +6,12 @@ const wait = async (ms = 1000) => new Promise((resolve) => setTimeout(resolve, m
 
 const validTypes = [
   `text/plain`,
-  /*
-   Currently, only text/plain is supported. Others will be added later.
-
   `text/markdown`,
   `text/html`,
   `application/json`,
+  /*
+   Currently, only text/plain is supported. Others will be added later.
+
   `image/png`,
   `image/jpeg`,
   `image/webp`,
@@ -159,6 +159,7 @@ describe('Fragment class', () => {
     });
   });
 
+  // editing the expected value from just 'text/plain' to everything mentioned in the 'validtypes' array
   describe('formats', () => {
     test('formats returns the expected result for plain text', () => {
       const fragment = new Fragment({
@@ -166,7 +167,7 @@ describe('Fragment class', () => {
         type: 'text/plain; charset=utf-8',
         size: 0,
       });
-      expect(fragment.formats).toEqual(['text/plain']);
+      expect(fragment.formats).toEqual(validTypes);
     });
   });
 

@@ -18,8 +18,6 @@ const {
 } = require('./data/memory/index');
 
 class Fragment {
-  static validTypes = ['text/plain'];
-
   constructor({
     id = randomUUID(),
     ownerId,
@@ -32,7 +30,7 @@ class Fragment {
       throw new Error(`OwnerID and type, both are required!!`);
     } else if (!Number.isInteger(size) || size < 0) {
       throw new Error(`Size must be integer greater than or equal to zero`);
-    } else if (!Fragment.validTypes.includes(type) && !type.startsWith('text/plain')) {
+    } else if (!Fragment.isSupportedType(type)) {
       throw new Error(`Invalid fragment type provided`);
     }
     this.id = id;
@@ -154,7 +152,7 @@ class Fragment {
    * @returns {Array<string>} list of supported mime types
    */
   get formats() {
-    const supportType = ['text/plain'];
+    const supportType = ['text/plain', 'text/markdown', 'text/html', 'application/json'];
     return supportType;
   }
 
@@ -164,7 +162,9 @@ class Fragment {
    * @returns {boolean} true if we support this Content-Type (i.e., type/subtype)
    */
   static isSupportedType(value) {
-    return value.startsWith('text/');
+    const validTypes = ['text/plain', 'text/html', 'text/markdown', 'application/json'];
+    const { type } = contentType.parse(value);
+    return validTypes.includes(type);
   }
 }
 

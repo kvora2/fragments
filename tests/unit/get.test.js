@@ -59,7 +59,7 @@ describe('GET /v1/fragments', () => {
   // providing an params id in domain and expecting that fragment to be returned
   test('expecting a specific fragment based on ID provided via params', async () => {
     const frag = new Fragment({
-      ownerId: 'user2@email.com',
+      ownerId: hash('user2@email.com'),
       type: 'text/plain',
     });
     await frag.save();

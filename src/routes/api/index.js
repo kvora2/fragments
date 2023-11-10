@@ -36,4 +36,7 @@ router.get('/fragments', require('./get'));
 // Defining route for getting fragment based on ID's
 router.get('/fragments/:id', require('./get'));
 
+// Defining route for getting fragment metadata based on ID's
+// router.get('/fragments/:id', require('./get'));
+
 module.exports = router;

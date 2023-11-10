@@ -5,6 +5,8 @@ const request = require('supertest');
 const hash = require('../../src/hash');
 
 const app = require('../../src/app');
+// const logger = require('../../src/logger');
+
 describe('POST /v1/fragments', () => {
   // If the request is missing the Authorization header, it should be forbidden
   test('unauthenticated requests are denied', () => request(app).post('/v1/fragments').expect(401));
@@ -40,12 +42,24 @@ describe('POST /v1/fragments', () => {
     expect(res.headers).toHaveProperty('location');
   });
 
-  // Sending unsupported content type
-  test('providing unsupported content-type and expecting error 400', async () => {
+  // expecting 201 with posting JSON data since its supported
+  test('expecting 201 with JSON data since it is supported fragment data', async () => {
     const res = await request(app)
       .post('/v1/fragments')
       .auth('user1@email.com', 'password1')
       .send({ data: 'Some json data' });
-    expect(res.statusCode).toBe(400);
+    expect(res.statusCode).toBe(201);
+    expect(res.body.fragments.type).toEqual('application/json');
+  });
+
+  // Sending unsupported content type (text/msword)
+  test('expecting 500 err code since the fragment is of unsupported type', async () => {
+    const res = await request(app)
+      .post('/v1/fragments')
+      .auth('user1@email.com', 'password1')
+      .send('msword data')
+      .set('content-type', 'application/msword');
+    expect(res.statusCode).toBe(415);
+    expect(res.body.error.message).toEqual('Unsupported media type');
   });
 });
