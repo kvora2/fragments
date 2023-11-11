@@ -76,7 +76,7 @@ describe('GET /v1/fragments', () => {
   });
 
   // providing an params id and info to get info of specific fragment
-  test('expecting a specific fragment metadata based on ID provided via params', async () => {
+  test("expecting a specific fragment metadata based on ID and 'info' provided via params", async () => {
     const frag = new Fragment({
       ownerId: hash('user2@email.com'),
       type: 'text/plain',
@@ -93,6 +93,26 @@ describe('GET /v1/fragments', () => {
     expect(res.body.status).toBe('ok');
     expect(res.body.fragment.ownerId).toEqual(hash('user2@email.com'));
     expect(res.body.fragment.type).toEqual('text/plain');
+  });
+
+  // providing an params id and ext 'html' to get specific fragment in html format from md format
+  test('expecting a specific fragment data converted in format of Ext provided via params', async () => {
+    const frag = new Fragment({
+      ownerId: hash('user1@email.com'),
+      type: 'text/markdown',
+    });
+    await frag.save();
+    const data = Buffer.from('# This is md text');
+    await frag.setData(data);
+
+    const res = await request(app)
+      .get(`/v1/fragments/${frag.id}.html`)
+      .auth('user1@email.com', 'password1');
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.status).toBe('ok');
+    expect(res.body.data).toEqual('<h1>This is md text</h1>\n');
+    // expect(res.body.body.type).toEqual('text/html');
   });
 
   //expecting an error throw since we are defining env vars null

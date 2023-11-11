@@ -36,6 +36,9 @@ router.get('/fragments', require('./get'));
 // Defining route for getting fragment metadata based on ID's
 router.get('/fragments/:id/info', require('./get'));
 
+// Defining route for getting fragment converted to extension requested
+router.get('/fragments/:id.:ext', require('./get'));
+
 // Defining route for getting fragment data only based on ID's
 router.get('/fragments/:id', require('./get'));
 
