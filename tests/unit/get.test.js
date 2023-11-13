@@ -53,7 +53,6 @@ describe('GET /v1/fragments', () => {
     expect(res.body.status).toBe('ok');
     expect(res.body.fragments.length).toBe(2);
     expect(res.body.fragments[1].ownerId).toEqual(hash('user1@email.com'));
-    // logger.debug(`testing - ${JSON.stringify(res.body.fragments)}`);
   });
 
   // providing an params id in domain and expecting that fragment to be returned
@@ -112,7 +111,6 @@ describe('GET /v1/fragments', () => {
     expect(res.statusCode).toBe(200);
     expect(res.body.status).toBe('ok');
     expect(res.body.data).toEqual('<h1>This is md text</h1>\n');
-    // expect(res.body.body.type).toEqual('text/html');
   });
 
   //expecting an error throw since we are defining env vars null

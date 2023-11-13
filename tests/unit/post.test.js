@@ -53,13 +53,23 @@ describe('POST /v1/fragments', () => {
   });
 
   // Sending unsupported content type (text/msword)
-  test('expecting 500 err code since the fragment is of unsupported type', async () => {
+  test('expecting 415 err code since the fragment is of unsupported type', async () => {
     const res = await request(app)
       .post('/v1/fragments')
       .auth('user1@email.com', 'password1')
-      .send('msword data')
+      .send('Invalid type data')
       .set('content-type', 'application/msword');
     expect(res.statusCode).toBe(415);
-    expect(res.body.error.message).toEqual('Unsupported media type');
+    expect(res.body.error.message).toEqual('Unsupported content type');
   });
+
+  // Sending unsupported content type (text/msword)
+  // test('expecting 415 err code since the fragment is of unsupported type', async () => {
+  //   const res = await request(app)
+  //     .post('/v1/fragments')
+  //     .auth('user2@email.com', 'password2')
+  //     .set('content-type', 'text/plain');
+  //   expect(res.statusCode).toBe(400);
+  //   expect(res.body.error.message).toEqual('Invalid request Body');
+  // });
 });

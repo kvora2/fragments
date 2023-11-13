@@ -11,6 +11,7 @@ module.exports = async (req, res) => {
     // Parse the Content-Type header of the request
     const { type } = contentType.parse(req);
 
+    logger.debug(`post check - ${JSON.stringify(req.body)}`);
     if (Fragment.isSupportedType(type)) {
       // Check if the request body is a Buffer
       if (Buffer.isBuffer(req.body)) {
@@ -41,7 +42,7 @@ module.exports = async (req, res) => {
         res.status(400).json(createErrorResponse(400, 'Invalid request Body'));
       }
     } else {
-      res.status(415).json(createErrorResponse(415, 'Unsupported media type'));
+      res.status(415).json(createErrorResponse(415, 'Unsupported content type'));
     }
   } catch (err) {
     // Handle any errors occurring during processing
