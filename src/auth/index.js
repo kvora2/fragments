@@ -3,7 +3,11 @@
 // const logger = require('../logger');
 
 // Prefer Amazon Cognito
-if (process.env.AWS_COGNITO_POOL_ID && process.env.AWS_COGNITO_CLIENT_ID) {
+if (
+  process.env.AWS_COGNITO_POOL_ID &&
+  process.env.AWS_COGNITO_CLIENT_ID &&
+  process.env.NODE_ENV !== 'test'
+) {
   module.exports = require('./cognito');
 }
 // Also allow for an .htpasswd file to be used, but not in production

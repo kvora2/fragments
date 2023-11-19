@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
     // Parse the Content-Type header of the request
     const { type } = contentType.parse(req);
 
-    logger.debug(`post check - ${JSON.stringify(req.body)}`);
+    // logger.debug(`post check - ${JSON.stringify(req.body)}`);
     if (Fragment.isSupportedType(type)) {
       // Check if the request body is a Buffer
       if (Buffer.isBuffer(req.body)) {
