@@ -42,9 +42,9 @@ GET {{url}}
 user1@email.com:password1
 
 HTTP/1.1 200
-#Content-Type: application/json
-#Content-Length: 18
+Content-Type: application/json; charset=utf-8
+Content-Length: 16
 [Asserts]
-jsonpath "$.data" == ```json 
+body == ```json 
 {name: "user1"}
 ```

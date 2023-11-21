@@ -71,8 +71,8 @@ describe('GET /v1/fragments', () => {
 
     logger.debug(`getting id - ${JSON.stringify(res)}`);
     expect(res.statusCode).toBe(200);
-    expect(res.body.status).toBe('ok');
-    expect(res.body.data).toEqual('Some Data');
+    // expect(res.body.status).toBe('ok');
+    expect(res.text).toEqual('Some Data');
   });
 
   // providing an params id and info to get info of specific fragment
@@ -110,8 +110,8 @@ describe('GET /v1/fragments', () => {
       .auth('user1@email.com', 'password1');
 
     expect(res.statusCode).toBe(200);
-    expect(res.body.status).toBe('ok');
-    expect(res.body.data).toEqual('<h1>This is md text</h1>\n');
+    expect(res.text).toEqual('<h1>This is md text</h1>\n');
+    expect(res.headers['content-type']).toEqual('text/html; charset=utf-8');
   });
 
   //expecting an error throw since we are defining env vars null
