@@ -22,17 +22,14 @@ module.exports = async (req, res) => {
       const fragData = await fragmentMeta.getData();
       var data = Buffer.from(fragData).toString('utf-8');
 
-      // res.setHeader('Content-Type', fragmentMeta.type);
-
+      res.setHeader('Content-Type', fragmentMeta.type);
       //checking if data can be converted to required format and converting if so
       if (ext === 'html' && fragmentMeta.type.includes('markdown')) {
         data = mdIt.render(data);
-        // res.set({ 'Content-Type': 'text/html' });
+        res.setHeader('Content-Type', 'text/html');
       }
-      // res.setHeader('Content-Length', data.length);
       // logger.debug(`getting1 - ${fragmentMeta.type} and ${res.get('Content-Length')}}`); ///////////
-
-      res.status(200).json(createSuccessResponse({ data }));
+      res.status(200).send(data);
     } else {
       res.status(200).json(createSuccessResponse({ fragment: fragmentMeta }));
     }
