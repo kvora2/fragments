@@ -1,6 +1,8 @@
 // src/routes/index.js
 
 const express = require('express');
+//os module for getting hostname
+const { hostname } = require('os');
 
 // version and author from package.json
 const { version, author } = require('../../package.json');
@@ -30,9 +32,11 @@ router.get('/', (req, res) => {
   // Send a 200 'OK' response
   res.status(200).json(
     createSuccessResponse({
-      author,
+      author: author,
       githubUrl: 'https://github.com/kvora2/fragments',
       version,
+      // Including the hostname in the response
+      hostname: hostname(),
     })
   );
 });
