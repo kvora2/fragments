@@ -16,7 +16,7 @@
         }
       ],
       "essential": true,
-      "environment": [{ "//cmt1": "Need to add env vars here" }],
+      "environment": [],
       "environmentFiles": [],
       "mountPoints": [],
       "volumesFrom": [],
