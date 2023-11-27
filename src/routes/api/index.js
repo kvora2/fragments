@@ -39,4 +39,7 @@ router.get('/fragments/:id.:ext', require('./get'));
 // Defining route for getting fragment data only based on ID's
 router.get('/fragments/:id', require('./get'));
 
+// Defining route for deleting a fragment based on OwnerID and ID
+router.delete('fragments/:id', require('./delete'));
+
 module.exports = router;
