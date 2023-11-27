@@ -1,4 +1,4 @@
-// src/routes/index.jss
+// src/routes/index.js
 
 const express = require('express');
 //os module for getting hostname
