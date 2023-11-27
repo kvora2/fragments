@@ -15,7 +15,7 @@ const {
   writeFragmentData,
   listFragments,
   deleteFragment,
-} = require('./data/index');
+} = require('./data');
 
 class Fragment {
   constructor({
