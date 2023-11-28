@@ -16,7 +16,12 @@
         }
       ],
       "essential": true,
-      "environment": [],
+      "environment": [
+        {
+          "name": "AWS_S3_BUCKET_NAME",
+          "value": "k.vora-fragments"
+        }
+      ],
       "environmentFiles": [],
       "mountPoints": [],
       "volumesFrom": [],
@@ -62,6 +67,7 @@
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
     }
   ],
+  "taskRoleArn": "arn:aws:iam::528604344820:role/LabRole",
   "placementConstraints": [],
   "compatibilities": ["EC2", "FARGATE"],
   "requiresCompatibilities": ["FARGATE"],
