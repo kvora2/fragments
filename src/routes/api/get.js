@@ -1,9 +1,10 @@
 // src/routes/api/get.js
 
-const { createSuccessResponse } = require('../../response');
+const { createSuccessResponse, createErrorResponse } = require('../../response');
 const { Fragment } = require('../../model/fragment');
 const mdIt = require('markdown-it')();
 // const contentType = require('content-type');
+const logger = require('../../logger');
 
 // Getting a list of fragments for the current user
 module.exports = async (req, res) => {
@@ -13,32 +14,39 @@ module.exports = async (req, res) => {
   // checking for expand query in domain
   const expand = req.query['expand'] === '1';
 
-  if (id) {
-    const info = req.route.path.includes('info');
-    const fragmentMeta = await Fragment.byId(userID, id);
-    if (!info) {
-      //getting specific fragment data
-      const fragData = await fragmentMeta.getData();
-      var data = Buffer.from(fragData).toString('utf-8');
+  try {
+    if (id) {
+      const info = req.route.path.includes('info');
+      const fragmentMeta = await Fragment.byId(userID, id);
+      if (!info) {
+        //getting specific fragment data
+        logger.info(`checking get.js -> ${userID} and ${id}`);
 
-      res.setHeader('Content-Type', fragmentMeta.type);
-      //checking if data can be converted to required format and converting if so
-      if (ext === 'html' && fragmentMeta.type.includes('markdown')) {
-        data = mdIt.render(data);
-        res.setHeader('Content-Type', 'text/html');
+        const fragData = await fragmentMeta.getData();
+        var data = Buffer.from(fragData).toString('utf-8');
+
+        res.setHeader('Content-Type', fragmentMeta.type);
+        //checking if data can be converted to required format and converting if so
+        if (ext === 'html' && fragmentMeta.type.includes('markdown')) {
+          data = mdIt.render(data);
+          res.setHeader('Content-Type', 'text/html');
+        }
+        // logger.debug(`getting1 - ${fragmentMeta.type} and ${res.get('Content-Length')}}`); ///////////
+        res.status(200).send(data);
+      } else {
+        res.status(200).json(createSuccessResponse({ fragment: fragmentMeta }));
       }
-      // logger.debug(`getting1 - ${fragmentMeta.type} and ${res.get('Content-Length')}}`); ///////////
-      res.status(200).send(data);
-    } else {
-      res.status(200).json(createSuccessResponse({ fragment: fragmentMeta }));
-    }
-  } else if (expand) {
-    const fragmentList = await Fragment.byUser(userID, expand);
+    } else if (expand) {
+      const fragmentList = await Fragment.byUser(userID, expand);
 
-    // logger.debug(`getting2 - ${JSON.stringify(fragmentList)}`);
-    res.status(200).json(createSuccessResponse({ fragments: [...fragmentList] }));
-  } else {
-    const fragmentList = await Fragment.byUser(userID);
-    res.status(200).json(createSuccessResponse({ fragments: [...fragmentList] }));
+      // logger.debug(`getting2 - ${JSON.stringify(fragmentList)}`);
+      res.status(200).json(createSuccessResponse({ fragments: [...fragmentList] }));
+    } else {
+      const fragmentList = await Fragment.byUser(userID);
+      res.status(200).json(createSuccessResponse({ fragments: [...fragmentList] }));
+    }
+  } catch (err) {
+    logger.error(`Error getting fragment: ${err}`);
+    res.status(404).json(createErrorResponse(404, err));
   }
 };

@@ -123,17 +123,14 @@ async function deleteFragment(ownerId, id) {
   try {
     // sending cmd to delete a fragment from S3
     await s3Client.send(command);
+    // Delete metadata
+    await metadata.del(ownerId, id);
   } catch (err) {
     // If anything goes wrong while deleting, log enough info that we can debug
     const { Bucket, Key } = params;
     logger.error({ err, Bucket, Key }, 'Error deleting fragment data from S3');
     throw new Error('unable to delete fragment data');
   }
-
-  return Promise(
-    // Delete metadata
-    metadata.del(ownerId, id)
-  );
 }
 
 module.exports.listFragments = listFragments;

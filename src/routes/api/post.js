@@ -10,11 +10,12 @@ module.exports = async (req, res) => {
   try {
     // Parse the Content-Type header of the request
     const { type } = contentType.parse(req);
+    const fragBody = req.body;
 
     // logger.debug(`post check - ${JSON.stringify(req.body)}`);
     if (Fragment.isSupportedType(type)) {
       // Check if the request body is a Buffer
-      if (Buffer.isBuffer(req.body)) {
+      if (Buffer.isBuffer(fragBody)) {
         // getting current host from requesting url
         process.env.API_URL = 'http://' + req.headers.host;
 
@@ -27,7 +28,7 @@ module.exports = async (req, res) => {
         });
 
         if (req.body) {
-          fragment.setData(Buffer.from(req.body));
+          await fragment.setData(fragBody);
         }
         // Save/update the fragment instance
         await fragment.save();

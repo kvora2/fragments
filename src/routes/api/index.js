@@ -23,6 +23,9 @@ const rawBody = () =>
     },
   });
 
+// Defining route for deleting a fragment based on OwnerID and ID
+router.delete('/fragments/:id', require('./delete'));
+
 // Use a raw body parser for POST, which will give a `Buffer` Object or `{}` at `req.body`
 // You can use Buffer.isBuffer(req.body) to test if it was parsed by the raw body parser.
 router.post('/fragments', rawBody(), require('./post'));
@@ -38,8 +41,5 @@ router.get('/fragments/:id.:ext', require('./get'));
 
 // Defining route for getting fragment data only based on ID's
 router.get('/fragments/:id', require('./get'));
-
-// Defining route for deleting a fragment based on OwnerID and ID
-router.delete('fragments/:id', require('./delete'));
 
 module.exports = router;
