@@ -134,3 +134,9 @@ dist
 
 #coverage file is locally generated when used the npm run coverage cmd so it won't be needed on github
 coverage
+
+#minio Local files
+minio
+
+# local docker compose file for local S3
+docker-compose.local.yml
