@@ -72,7 +72,7 @@ GET {{fragment2_url}}/info
 user1@email.com:password1
 
 HTTP/1.1 200
-content-type: text/markdown; charset=utf-8
+content-type: application/json; charset=utf-8
 [Asserts]
 #expecting status to be 'ok'
 jsonpath "$.status" == "ok"
