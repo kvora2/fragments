@@ -49,8 +49,8 @@ class Fragment {
    */
   static async byUser(ownerId, expand = false) {
     try {
-      const fragmentsData = listFragments(ownerId, expand);
-      return fragmentsData;
+      const fragmentsInfo = listFragments(ownerId, expand);
+      return fragmentsInfo;
     } catch (err) {
       logger.error(`byUser Error: ${err}`);
       throw err;
@@ -65,11 +65,11 @@ class Fragment {
    */
   static async byId(ownerId, id) {
     try {
-      const fragmentData = await readFragment(ownerId, id);
-      if (!fragmentData) {
+      const fragmentInfo = await readFragment(ownerId, id);
+      if (!fragmentInfo) {
         throw new Error(`ownerID: ${ownerId} or id: ${id} does not exit in DB`);
       }
-      return fragmentData;
+      return fragmentInfo;
     } catch (err) {
       logger.error(`byId Error: ${err}`);
       throw err;
@@ -90,7 +90,7 @@ class Fragment {
    * Saves the current fragment to the database
    * @returns Promise<void>
    */
-  save() {
+  async save() {
     try {
       this.updated = new Date();
       return writeFragment(this);
@@ -104,8 +104,8 @@ class Fragment {
    * Gets the fragment's data from the database
    * @returns Promise<Buffer>
    */
-  async getData() {
-    return readFragmentData(this.ownerId, this.id);
+  static async getData(ownerID, id) {
+    return readFragmentData(ownerID, id);
   }
 
   /**

@@ -18,14 +18,15 @@ module.exports = async (req, res) => {
     if (id) {
       const info = req.route.path.includes('info');
       const fragmentMeta = await Fragment.byId(userID, id);
+      logger.info(`check get.js -> ${userID} and ${id}`);
       if (!info) {
         //getting specific fragment data
-        logger.info(`checking get.js -> ${userID} and ${id}`);
-
-        const fragData = await fragmentMeta.getData();
+        const fragData = await Fragment.getData(userID, id);
         var data = Buffer.from(fragData).toString('utf-8');
 
+        // setting content-type of res based on fragment data type
         res.setHeader('Content-Type', fragmentMeta.type);
+
         //checking if data can be converted to required format and converting if so
         if (ext === 'html' && fragmentMeta.type.includes('markdown')) {
           data = mdIt.render(data);
@@ -34,6 +35,7 @@ module.exports = async (req, res) => {
         // logger.debug(`getting1 - ${fragmentMeta.type} and ${res.get('Content-Length')}}`); ///////////
         res.status(200).send(data);
       } else {
+        logger.info(`check FragmentMETA -> ${JSON.stringify(fragmentMeta)}`);
         res.status(200).json(createSuccessResponse({ fragment: fragmentMeta }));
       }
     } else if (expand) {

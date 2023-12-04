@@ -1,7 +1,7 @@
 // tests/unit/get.test.js
 
 const request = require('supertest');
-const logger = require('../../src/logger');
+// const logger = require('../../src/logger');
 const { Fragment } = require('../../src/model/fragment');
 const app = require('../../src/app');
 const hash = require('../../src/hash');
@@ -69,7 +69,7 @@ describe('GET /v1/fragments', () => {
       .get(`/v1/fragments/${frag.id}`)
       .auth('user2@email.com', 'password2');
 
-    logger.debug(`getting id - ${JSON.stringify(res)}`);
+    // logger.debug(`getting id - ${JSON.stringify(res)}`);
     expect(res.statusCode).toBe(200);
     // expect(res.body.status).toBe('ok');
     expect(res.text).toEqual('Some Data');
@@ -89,6 +89,7 @@ describe('GET /v1/fragments', () => {
       .get(`/v1/fragments/${frag.id}/info`)
       .auth('user2@email.com', 'password2');
 
+    // logger.debug(`getting info - ${JSON.stringify(res.text)}`);
     expect(res.statusCode).toBe(200);
     expect(res.body.status).toBe('ok');
     expect(res.body.fragment.ownerId).toEqual(hash('user2@email.com'));
