@@ -21,7 +21,7 @@ function writeFragment(fragment) {
   const command = new PutCommand(params);
 
   try {
-    logger.info(`Putting fragment MetaData: ${JSON.stringify(fragment)}`);
+    logger.debug(`Putting fragment MetaData: ${JSON.stringify(fragment)}`);
     return ddbDocClient.send(command);
   } catch (err) {
     logger.warn({ err, params, fragment }, 'error writing fragment to DynamoDB');

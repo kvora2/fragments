@@ -21,8 +21,8 @@ class Fragment {
   constructor({
     id = randomUUID(),
     ownerId,
-    created = new Date(),
-    updated = created,
+    created = new Date().toUTCString(),
+    updated = new Date().toUTCString(),
     type,
     size = 0,
   }) {
@@ -91,9 +91,9 @@ class Fragment {
    * Saves the current fragment to the database
    * @returns Promise<void>
    */
-  async save() {
+  save() {
     try {
-      this.updated = new Date();
+      this.updated = new Date().toUTCString();
       return writeFragment(this);
     } catch (err) {
       logger.error(`saving error: ${err}`);

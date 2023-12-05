@@ -38,8 +38,8 @@ jsonpath "$.fragment.id" == "{{fragment1_id}}"
 # Our ownerId hash is a hex encoded string
 jsonpath "$.fragment.ownerId" matches "^[0-9a-fA-F]+$"
 # Basic check for the presence of created and updated date strings.
-#jsonpath "$.fragment.created" isString
-#jsonpath "$.fragment.updated" isString
+jsonpath "$.fragment.created" isString
+jsonpath "$.fragment.updated" isString
 jsonpath "$.fragment.type" == "application/json"
 # 15 is the length of our json fragment data
 jsonpath "$.fragment.size" == 26
@@ -81,8 +81,8 @@ jsonpath "$.fragment.id" matches "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-
 # Our ownerId hash is a hex encoded string
 jsonpath "$.fragment.ownerId" matches "^[0-9a-fA-F]+$"
 # Basic check for the presence of created and updated date strings.
-#jsonpath "$.fragment.created" isString
-#jsonpath "$.fragment.updated" isString
+jsonpath "$.fragment.created" isString
+jsonpath "$.fragment.updated" isString
 jsonpath "$.fragment.type" == "text/markdown"
 # 15 is the length of our json fragment data
 jsonpath "$.fragment.size" == 23
