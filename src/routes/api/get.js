@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
       logger.info(`check get.js -> ${userID} and ${id}`);
       if (!info) {
         //getting specific fragment data
-        const fragData = await Fragment.getData(userID, id);
+        const fragData = await fragmentMeta.getData(userID, id);
         var data = Buffer.from(fragData).toString('utf-8');
 
         // setting content-type of res based on fragment data type

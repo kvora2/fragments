@@ -69,7 +69,8 @@ class Fragment {
       if (!fragmentInfo) {
         throw new Error(`ownerID: ${ownerId} or id: ${id} does not exit in DB`);
       }
-      return fragmentInfo;
+      const newFrag = new Fragment(fragmentInfo);
+      return newFrag;
     } catch (err) {
       logger.error(`byId Error: ${err}`);
       throw err;
@@ -104,8 +105,8 @@ class Fragment {
    * Gets the fragment's data from the database
    * @returns Promise<Buffer>
    */
-  static async getData(ownerID, id) {
-    return readFragmentData(ownerID, id);
+  getData() {
+    return readFragmentData(this.ownerId, this.id);
   }
 
   /**
