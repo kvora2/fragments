@@ -18,36 +18,16 @@
       "essential": true,
       "environment": [
         {
-          "name": "AWS_COGNITO_POOL_ID",
-          "value": "us-east-1_K4lnDw0Q7"
-        },
-        {
-          "name": "AWS_REGION",
-          "value": "us-east-1"
-        },
-        {
-          "name": "API_URL",
-          "value": "http://localhost:8080"
-        },
-        {
           "name": "AWS_S3_BUCKET_NAME",
           "value": "k.vora-fragments"
-        },
-        {
-          "name": "NODE_ENV",
-          "value": "production"
         },
         {
           "name": "AWS_DYNAMODB_TABLE_NAME",
           "value": "fragments"
         },
         {
-          "name": "LOG_LEVEL",
-          "value": "info"
-        },
-        {
-          "name": "AWS_COGNITO_CLIENT_ID",
-          "value": "7tqs0tgo0882hb690ea6qqk9d2"
+          "name": "PORT",
+          "value": "8080"
         }
       ],
       "mountPoints": [],
