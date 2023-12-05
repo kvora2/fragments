@@ -1,9 +1,9 @@
 {
-  "taskDefinitionArn": "arn:aws:ecs:us-east-1:528604344820:task-definition/fragments-task:1",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:528604344820:task-definition/fragments-task:7",
   "containerDefinitions": [
     {
       "name": "fragments",
-      "image": "kelvin21/fragments:latest",
+      "image": "528604344820.dkr.ecr.us-east-1.amazonaws.com/fragments:v0.10.0",
       "cpu": 256,
       "memoryReservation": 512,
       "portMappings": [
@@ -18,18 +18,36 @@
       "essential": true,
       "environment": [
         {
+          "name": "AWS_COGNITO_POOL_ID",
+          "value": "us-east-1_K4lnDw0Q7"
+        },
+        {
+          "name": "API_URL",
+          "value": "http://localhost:8080"
+        },
+        {
           "name": "AWS_S3_BUCKET_NAME",
           "value": "k.vora-fragments"
         },
         {
           "name": "AWS_DYNAMODB_TABLE_NAME",
           "value": "fragments"
+        },
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "LOG_LEVEL",
+          "value": "info"
+        },
+        {
+          "name": "AWS_COGNITO_CLIENT_ID",
+          "value": "7tqs0tgo0882hb690ea6qqk9d2"
         }
       ],
-      "environmentFiles": [],
       "mountPoints": [],
       "volumesFrom": [],
-      "ulimits": [],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -37,15 +55,15 @@
           "awslogs-group": "/ecs/fragments-task",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
-        },
-        "secretOptions": []
+        }
       }
     }
   ],
   "family": "fragments-task",
+  "taskRoleArn": "arn:aws:iam::528604344820:role/LabRole",
   "executionRoleArn": "arn:aws:iam::528604344820:role/LabRole",
   "networkMode": "awsvpc",
-  "revision": 1,
+  "revision": 7,
   "volumes": [],
   "status": "ACTIVE",
   "requiresAttributes": [
@@ -56,10 +74,19 @@
       "name": "ecs.capability.execution-role-awslogs"
     },
     {
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
     },
     {
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.task-iam-role"
+    },
+    {
+      "name": "ecs.capability.execution-role-ecr-pull"
     },
     {
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
@@ -71,7 +98,6 @@
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
     }
   ],
-  "taskRoleArn": "arn:aws:iam::528604344820:role/LabRole",
   "placementConstraints": [],
   "compatibilities": ["EC2", "FARGATE"],
   "requiresCompatibilities": ["FARGATE"],
@@ -81,7 +107,7 @@
     "cpuArchitecture": "X86_64",
     "operatingSystemFamily": "LINUX"
   },
-  "registeredAt": "2023-11-26T19:45:41.192Z",
+  "registeredAt": "2023-12-04T23:11:28.029Z",
   "registeredBy": "arn:aws:sts::528604344820:assumed-role/voclabs/user1911195=kvora2@myseneca.ca",
   "tags": []
 }
