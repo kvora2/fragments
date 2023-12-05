@@ -1,9 +1,9 @@
 {
-  "taskDefinitionArn": "arn:aws:ecs:us-east-1:528604344820:task-definition/fragments-task:8",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:528604344820:task-definition/fragments-task:9",
   "containerDefinitions": [
     {
       "name": "fragments",
-      "image": "528604344820.dkr.ecr.us-east-1.amazonaws.com/fragments:v0.10.1",
+      "image": "528604344820.dkr.ecr.us-east-1.amazonaws.com/fragments:v0.10.2",
       "cpu": 256,
       "memoryReservation": 512,
       "portMappings": [
@@ -18,8 +18,36 @@
       "essential": true,
       "environment": [
         {
+          "name": "AWS_COGNITO_POOL_ID",
+          "value": "us-east-1_K4lnDw0Q7"
+        },
+        {
+          "name": "AWS_REGION",
+          "value": "us-east-1"
+        },
+        {
+          "name": "API_URL",
+          "value": "http://localhost:8080"
+        },
+        {
           "name": "AWS_S3_BUCKET_NAME",
           "value": "k.vora-fragments"
+        },
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "AWS_DYNAMODB_TABLE_NAME",
+          "value": "fragments"
+        },
+        {
+          "name": "LOG_LEVEL",
+          "value": "info"
+        },
+        {
+          "name": "AWS_COGNITO_CLIENT_ID",
+          "value": "7tqs0tgo0882hb690ea6qqk9d2"
         }
       ],
       "mountPoints": [],
@@ -39,7 +67,7 @@
   "taskRoleArn": "arn:aws:iam::528604344820:role/LabRole",
   "executionRoleArn": "arn:aws:iam::528604344820:role/LabRole",
   "networkMode": "awsvpc",
-  "revision": 8,
+  "revision": 9,
   "volumes": [],
   "status": "ACTIVE",
   "requiresAttributes": [
@@ -83,7 +111,7 @@
     "cpuArchitecture": "X86_64",
     "operatingSystemFamily": "LINUX"
   },
-  "registeredAt": "2023-12-05T01:43:41.654Z",
+  "registeredAt": "2023-12-05T03:23:27.136Z",
   "registeredBy": "arn:aws:sts::528604344820:assumed-role/voclabs/user1911195=kvora2@myseneca.ca",
   "tags": []
 }
