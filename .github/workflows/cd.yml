@@ -96,6 +96,7 @@ jobs:
             AWS_COGNITO_CLIENT_ID=7tqs0tgo0882hb690ea6qqk9d2
             API_URL=http://localhost:8080
             AWS_DYNAMODB_TABLE_NAME=fragments
+            AWS_REGION=us-east-1
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
