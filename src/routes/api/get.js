@@ -3,7 +3,6 @@
 const { createSuccessResponse, createErrorResponse } = require('../../response');
 const { Fragment } = require('../../model/fragment');
 const mdIt = require('markdown-it')();
-// const contentType = require('content-type');
 const logger = require('../../logger');
 
 // Getting a list of fragments for the current user

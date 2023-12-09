@@ -24,7 +24,6 @@ module.exports = async (req, res) => {
         const fragment = new Fragment({
           ownerId: req.user,
           type: type,
-          size: req.body.byteLength,
         });
 
         if (req.body) {

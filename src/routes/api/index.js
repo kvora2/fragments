@@ -42,4 +42,7 @@ router.get('/fragments/:id.:ext', require('./get'));
 // Defining route for getting fragment data only based on ID's
 router.get('/fragments/:id', require('./get'));
 
+// route for updating fragment data based on its ID's
+router.put('/fragments/:id', rawBody(), require('./put'));
+
 module.exports = router;
