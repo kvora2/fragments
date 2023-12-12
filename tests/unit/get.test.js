@@ -97,7 +97,7 @@ describe('GET /v1/fragments', () => {
   });
 
   // providing an params id and ext 'html' to get specific fragment in html format from md format
-  test('expecting a specific fragment data converted in format of Ext provided via params', async () => {
+  test("expecting a fragment data converted in 'html' format from 'md' format", async () => {
     const frag = new Fragment({
       ownerId: hash('user1@email.com'),
       type: 'text/markdown',
@@ -113,6 +113,59 @@ describe('GET /v1/fragments', () => {
     expect(res.statusCode).toBe(200);
     expect(res.text).toEqual('<h1>This is md text</h1>\n');
     expect(res.headers['content-type']).toEqual('text/html; charset=utf-8');
+  });
+
+  // providing an params id and ext 'txt' to get specific fragment in txt format from md format
+  test("expecting a fragment data converted in 'txt' format from 'md' format", async () => {
+    const frag = new Fragment({
+      ownerId: hash('user1@email.com'),
+      type: 'text/markdown',
+    });
+    await frag.save();
+    const data = Buffer.from('# This is md text');
+    await frag.setData(data);
+
+    const res = await request(app)
+      .get(`/v1/fragments/${frag.id}.txt`)
+      .auth('user1@email.com', 'password1');
+
+    expect(res.statusCode).toBe(200);
+    expect(res.text).toEqual('THIS IS MD TEXT');
+    expect(res.headers['content-type']).toEqual('text/plain; charset=utf-8');
+  });
+
+  // providing an params id and ext 'txt' to get specific fragment in txt format from 'html' format
+  test("expecting a fragment data converted in 'txt' format from 'html' format", async () => {
+    const frag = new Fragment({
+      ownerId: hash('user1@email.com'),
+      type: 'text/html',
+    });
+    await frag.save();
+    const data = Buffer.from('<p>Testing html to txt<p>');
+    await frag.setData(data);
+
+    const res = await request(app)
+      .get(`/v1/fragments/${frag.id}.txt`)
+      .auth('user1@email.com', 'password1');
+
+    expect(res.statusCode).toBe(200);
+    expect(res.text).toEqual('Testing html to txt');
+    expect(res.headers['content-type']).toEqual('text/plain; charset=utf-8');
+  });
+
+  // providing an params id and ext 'txt' to get specific fragment in txt format from 'json' format
+  test("expecting a fragment data converted in 'txt' format from 'json' format", async () => {
+    const res1 = await request(app)
+      .post('/v1/fragments')
+      .auth('user1@email.com', 'password1')
+      .send({ task: 2 });
+
+    const res2 = await request(app)
+      .get(`/v1/fragments/${res1.body.fragment.id}.txt`)
+      .auth('user1@email.com', 'password1');
+
+    expect(res2.statusCode).toBe(200);
+    expect(res2.headers['content-type']).toEqual('text/plain; charset=utf-8');
   });
 
   //expecting an error throw since we are defining env vars null

@@ -2,8 +2,13 @@
 
 const { createSuccessResponse, createErrorResponse } = require('../../response');
 const { Fragment } = require('../../model/fragment');
-const mdIt = require('markdown-it')();
 const logger = require('../../logger');
+//for converting md to html
+const mdIt = require('markdown-it')();
+//for converting html to txt
+const { convert } = require('html-to-text');
+//for converting json to txt
+const { jsonToPlainText } = require('json-to-plain-text');
 
 // Getting a list of fragments for the current user
 module.exports = async (req, res) => {
@@ -27,10 +32,77 @@ module.exports = async (req, res) => {
         res.setHeader('Content-Type', fragmentMeta.type);
 
         //checking if data can be converted to required format and converting if so
-        if (ext === 'html' && fragmentMeta.type.includes('markdown')) {
-          data = mdIt.render(data);
-          res.setHeader('Content-Type', 'text/html');
+        if (ext) {
+          //md conversions
+          if (fragmentMeta.type.includes('markdown')) {
+            //as it is
+            if (ext === 'md') {
+              // No operations needed
+            }
+            //html conversion
+            else if (ext === 'html') {
+              data = mdIt.render(data);
+              res.setHeader('Content-Type', 'text/html');
+              logger.debug(`convert md to html - ${fragmentMeta.type} and ${data}}`); ///////////
+            }
+            //txt conversion
+            else if (ext === 'txt') {
+              //html conversion
+              data = mdIt.render(data);
+              //txt conversion
+              data = convert(data, {
+                wordwrap: false,
+                ignoreHref: true,
+                ignoreImage: true,
+              });
+              res.setHeader('Content-Type', 'text/plain');
+              logger.debug(`convert md to Txt - ${fragmentMeta.type} and ${data}}`); ///////////
+            }
+          }
+          //html conversions
+          else if (fragmentMeta.type.includes('html')) {
+            //as it is
+            if (ext === 'html') {
+              // No operations needed
+            }
+            //txt conversion
+            else if (ext === 'txt') {
+              //txt conversion
+              data = convert(data, {
+                wordwrap: false,
+                ignoreHref: true,
+                ignoreImage: true,
+              });
+              //getting rid of extra spacing and new lines apart from content
+              data = data.trim();
+              res.setHeader('Content-Type', 'text/plain');
+              logger.debug(`convert html to Txt - ${fragmentMeta.type} and ${data}}`); ///////////
+            }
+          }
+          //json conversions
+          else if (fragmentMeta.type.includes('json')) {
+            //as it is
+            if (ext === 'html') {
+              // No operations needed
+            }
+            //txt conversion
+            else if (ext === 'txt') {
+              //txt conversion
+              // This is optional (options on what to expect as for 'text' returned, when converted)
+              // const options = {
+              //   seperator: ':', // seperate keys and values.
+              //   spacing: true, // Whether to include spacing before colons or not
+              //   squareBracketsForArray: false, // Whether to use square brackets for arrays or not
+              //   doubleQuotesForKeys: false, // Whether to use double quotes for object keys or not
+              //   doubleQuotesForValues: false, // Whether to use double quotes for string values or not
+              // };
+              data = jsonToPlainText(data);
+              res.setHeader('Content-Type', 'text/plain');
+              logger.debug(`Convert json to Txt - ${fragmentMeta.type} and ${data}}`); ///////////
+            }
+          }
         }
+
         // logger.debug(`getting1 - ${fragmentMeta.type} and ${res.get('Content-Length')}}`); ///////////
         res.status(200).send(data);
       } else {
