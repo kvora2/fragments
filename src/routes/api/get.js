@@ -89,14 +89,15 @@ module.exports = async (req, res) => {
             else if (ext === 'txt') {
               //txt conversion
               // This is optional (options on what to expect as for 'text' returned, when converted)
-              // const options = {
-              //   seperator: ':', // seperate keys and values.
-              //   spacing: true, // Whether to include spacing before colons or not
-              //   squareBracketsForArray: false, // Whether to use square brackets for arrays or not
-              //   doubleQuotesForKeys: false, // Whether to use double quotes for object keys or not
-              //   doubleQuotesForValues: false, // Whether to use double quotes for string values or not
-              // };
-              data = jsonToPlainText(data);
+              const options = {
+                color: false,
+                seperator: ':', // seperate keys and values.
+                spacing: true, // Whether to include spacing before colons or not
+                squareBracketsForArray: false, // Whether to use square brackets for arrays or not
+                doubleQuotesForKeys: false, // Whether to use double quotes for object keys or not
+                doubleQuotesForValues: false, // Whether to use double quotes for string values or not
+              };
+              data = jsonToPlainText(data, options);
               res.setHeader('Content-Type', 'text/plain');
               logger.debug(`Convert json to Txt - ${fragmentMeta.type} and ${data}}`); ///////////
             }
