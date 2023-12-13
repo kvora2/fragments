@@ -5,18 +5,14 @@ const { Fragment } = require('../../src/model/fragment');
 const wait = async (ms = 1000) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const validTypes = [
-  `text/plain`,
-  `text/markdown`,
-  `text/html`,
-  `application/json`,
-  /*
-   Currently, only text/plain is supported. Others will be added later.
-
-  `image/png`,
-  `image/jpeg`,
-  `image/webp`,
-  `image/gif`,
-  */
+  'text/plain',
+  'text/html',
+  'text/markdown',
+  'application/json',
+  'image/png',
+  'image/jpeg',
+  'image/webp',
+  'image/gif',
 ];
 
 describe('Fragment class', () => {

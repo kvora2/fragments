@@ -153,7 +153,16 @@ class Fragment {
    * @returns {Array<string>} list of supported mime types
    */
   get formats() {
-    const supportType = ['text/plain', 'text/markdown', 'text/html', 'application/json'];
+    const supportType = [
+      'text/plain',
+      'text/html',
+      'text/markdown',
+      'application/json',
+      'image/png',
+      'image/jpeg',
+      'image/webp',
+      'image/gif',
+    ];
     return supportType;
   }
 
@@ -163,7 +172,16 @@ class Fragment {
    * @returns {boolean} true if we support this Content-Type (i.e., type/subtype)
    */
   static isSupportedType(value) {
-    const validTypes = ['text/plain', 'text/html', 'text/markdown', 'application/json'];
+    const validTypes = [
+      'text/plain',
+      'text/html',
+      'text/markdown',
+      'application/json',
+      'image/png',
+      'image/jpeg',
+      'image/webp',
+      'image/gif',
+    ];
     const { type } = contentType.parse(value);
     return validTypes.includes(type);
   }

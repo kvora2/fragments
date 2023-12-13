@@ -63,13 +63,22 @@ describe('POST /v1/fragments', () => {
     expect(res.body.error.message).toEqual('Unsupported content type');
   });
 
-  // Sending unsupported content type (text/msword)
-  // test('expecting 415 err code since the fragment is of unsupported type', async () => {
-  //   const res = await request(app)
-  //     .post('/v1/fragments')
-  //     .auth('user2@email.com', 'password2')
-  //     .set('content-type', 'text/plain');
-  //   expect(res.statusCode).toBe(400);
-  //   expect(res.body.error.message).toEqual('Invalid request Body');
-  // });
+  test('should post an image fragment', async () => {
+    const image = await fetch('https://placehold.co/600x400'); // A simple placeholder image for testing
+    const arrBuffer = await image.arrayBuffer();
+    const imageBuffer = Buffer.from(arrBuffer);
+
+    const res = await request(app)
+      .post('/v1/fragments')
+      .auth('user1@email.com', 'password1')
+      .send(imageBuffer)
+      .set('content-type', 'image/jpeg');
+
+    // Add more assertions as needed
+    expect(res.statusCode).toBe(201);
+    expect(res.body.status).toBe('ok');
+    expect(res.body.fragment.ownerId).toEqual(hash('user1@email.com'));
+    expect(res.body.fragment.type).toEqual('image/jpeg');
+    expect(res.headers).toHaveProperty('location');
+  });
 });

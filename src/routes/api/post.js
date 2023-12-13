@@ -5,6 +5,8 @@ const contentType = require('content-type');
 
 //response function
 const { createErrorResponse, createSuccessResponse } = require('../../response');
+//posting image using sharp
+const sharp = require('sharp');
 
 module.exports = async (req, res) => {
   try {
@@ -26,9 +28,14 @@ module.exports = async (req, res) => {
           type: type,
         });
 
-        if (req.body) {
+        if (type.startsWith('image/')) {
+          const resizedImg = await sharp(fragBody).resize(200, 200).toBuffer();
+          logger.debug(`Image buffer -> ${fragBody} and done`);
+          await fragment.setData(resizedImg);
+        } else {
           await fragment.setData(fragBody);
         }
+
         // Save/update the fragment instance
         await fragment.save();
 
